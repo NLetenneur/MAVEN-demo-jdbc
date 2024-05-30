@@ -1,4 +1,4 @@
-package fr.diginamic.props;
+package fr.diginamic.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
-public class TestInsertion {
+public class TestUpdate {
 
 	public static void main(String[] args) {
 		ResourceBundle config = ResourceBundle.getBundle("database");
@@ -18,8 +18,10 @@ public class TestInsertion {
 			Connection maConnection = DriverManager.getConnection(url, user, password);
 			Statement monStatement = maConnection.createStatement();
 			int nb = monStatement
-					.executeUpdate("insert into FOURNISSEUR(id, nom) values(4,'La maison de la Peinture')");
+					.executeUpdate("update FOURNISSEUR set nom='La maison des Peintures' where id=4");
 			System.out.println(nb);
+			monStatement.close();
+			maConnection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

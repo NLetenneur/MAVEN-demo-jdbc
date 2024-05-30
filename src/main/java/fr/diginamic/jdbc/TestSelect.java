@@ -1,15 +1,18 @@
-package fr.diginamic.props;
+package fr.diginamic.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class TestConnexionJdbc {
+import fr.diginamic.jdbc.entites.Fournisseur;
 
-	public static void main(String[] args){
-		// TODO Auto-generated method stub
+public class TestSelect {
+
+	public static void main(String[] args) {
 		ResourceBundle config = ResourceBundle.getBundle("database");
 		String url = config.getString("database.url");
 		String user = config.getString("database.user");
@@ -18,15 +21,27 @@ public class TestConnexionJdbc {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			Connection maConnection = DriverManager.getConnection(url, user, password);
 			Statement monStatement = maConnection.createStatement();
-			int nb = monStatement.executeUpdate("insert into FOURNISSEUR(id, nom) values(4,'La maison de la Peinture')");
-			System.out.println(nb);
+			ResultSet curseur = monStatement
+					.executeQuery("select * from FOURNISSEUR");
+			ArrayList<Fournisseur> listeFour = new ArrayList<>();
+			while(curseur.next()) {
+				Integer id=curseur.getInt("id");
+				String nom=curseur.getString("nom");
+				listeFour.add(new Fournisseur(id, nom));
+			}
+			curseur.close();
 			monStatement.close();
 			maConnection.close();
+			
+			for (Fournisseur fournisseur: listeFour) {
+				System.out.println(fournisseur);
+				}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }
