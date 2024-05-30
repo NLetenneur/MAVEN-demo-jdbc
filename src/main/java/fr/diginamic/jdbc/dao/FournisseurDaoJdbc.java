@@ -49,9 +49,8 @@ public class FournisseurDaoJdbc implements FournisseurDao {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			Connection maConnection = DriverManager.getConnection(url, user, password);
 			Statement monStatement = maConnection.createStatement();
-			int id = fournisseur.getId();
-			String nom = fournisseur.getNom();
-			int nb = monStatement.executeUpdate("insert into FOURNISSEUR(id, nom) values(" + id + "," + nom + ")");
+			int nb = monStatement.executeUpdate("insert into FOURNISSEUR(id, nom) values(" + fournisseur.getId() + ", '"
+					+ fournisseur.getNom() + "')");
 			System.out.println(nb);
 			monStatement.close();
 			maConnection.close();
@@ -68,7 +67,7 @@ public class FournisseurDaoJdbc implements FournisseurDao {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			Connection maConnection = DriverManager.getConnection(url, user, password);
 			Statement monStatement = maConnection.createStatement();
-			int nb = monStatement.executeUpdate("update FOURNISSEUR set nom=" + nouveauNom + " where nom=" + ancienNom);
+			int nb = monStatement.executeUpdate("update FOURNISSEUR set nom='" + nouveauNom + "' where nom='" + ancienNom+"'");
 			monStatement.close();
 			maConnection.close();
 			return nb;
@@ -87,7 +86,7 @@ public class FournisseurDaoJdbc implements FournisseurDao {
 			Connection maConnection = DriverManager.getConnection(url, user, password);
 			Statement monStatement = maConnection.createStatement();
 			int nb = monStatement.executeUpdate("delete from FOURNISSEUR where id=" + fournisseur.getId());
-			if (nb!=0) {
+			if (nb != 0) {
 				return true;
 			}
 			monStatement.close();
