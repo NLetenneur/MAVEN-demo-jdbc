@@ -1,14 +1,14 @@
-package fr.diginamic.jdbc.entites;
+package fr.diginamic.jdbc.dao;
 
 import java.util.List;
 
-import fr.diginamic.jdbc.dao.FournisseurDaoJdbc;
+import fr.diginamic.jdbc.entites.Fournisseur;
 
 public class TestDaoJdbc {
 
 	public static void main(String[] args) {
 		Fournisseur four5 = new Fournisseur(5,"France de matériaux");
-		FournisseurDaoJdbc fournisseurDaoJdbc = new FournisseurDaoJdbc();
+		FournisseurDaoJdbc2 fournisseurDaoJdbc = new FournisseurDaoJdbc2();
 		fournisseurDaoJdbc.insert(four5);
 		List<Fournisseur>listeFour=fournisseurDaoJdbc.extraire();
 		System.out.println(listeFour);
